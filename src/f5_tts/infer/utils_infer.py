@@ -40,7 +40,11 @@ import subprocess
 
 _ref_audio_cache = {}
 
-device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+import platform
+if sys.platform == "darwin" and platform.machine() != "arm64":
+    device = "cpu"
+else:
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 
 # -----------------------------------------
 
